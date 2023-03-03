@@ -7,6 +7,7 @@ import org.apache.flink.streaming.api.functions.source.{RichParallelSourceFuncti
 import java.sql.{Connection, Driver, DriverManager, PreparedStatement}
 
 object RichParallelSourceFunction {
+
   def main(args: Array[String]): Unit = {
 
   }

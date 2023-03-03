@@ -19,7 +19,7 @@ object TestRichFunction {
     // 读取数据源
     val stream: DataStream[StaionLog] = streamEnv.readTextFile(filePath).map(line => {
       var arr = line.split(",")
-       new StaionLog(arr(0).trim,
+        StaionLog(arr(0).trim,
         arr(1).trim,
         arr(2).trim,
         arr(3).trim,
