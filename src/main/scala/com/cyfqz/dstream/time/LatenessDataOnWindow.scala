@@ -4,8 +4,13 @@ import com.cyfqz.dstream.transformation.StaionLog
 import com.cyfqz.dstream.window.TestAggregateFunctionByWindow.MyAggregateFunction
 import org.apache.flink.streaming.api.TimeCharacteristic
 import org.apache.flink.streaming.api.functions.timestamps.BoundedOutOfOrdernessTimestampExtractor
+import org.apache.flink.streaming.api.scala.function.WindowFunction
 import org.apache.flink.streaming.api.windowing.assigners.SlidingProcessingTimeWindows
 import org.apache.flink.streaming.api.windowing.time.Time
+import org.apache.flink.streaming.api.windowing.windows.TimeWindow
+import org.apache.flink.util.Collector
+
+import scala.collection.mutable
 
 object LatenessDataOnWindow {
   def main(args: Array[String]): Unit = {
@@ -41,5 +46,13 @@ object LatenessDataOnWindow {
       .aggregate(new MyAggregateFunction)
 
        streamEnv.execute()
+  }
+
+  class OutPutResultWindowFunction extends WindowFunction[Long,String,String,TimeWindow]{
+    override def apply(key: String, window: TimeWindow, input: Iterable[Long], out: Collector[String]): Unit = {
+      var value = input.iterator.next()
+      var sb = new StringBuilder()
+      sb.append("窗口范围：").append(window.getStart).append("-----").append(window.getEnd)
+    }
   }
 }
